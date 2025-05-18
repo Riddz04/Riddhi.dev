@@ -7,7 +7,7 @@ const projects = [
     id: 1,
     title: "CaptionizeIt",
     description: "A web app that simplifies adding accurate, timestamped captions to media files using AI-powered transcription and editing tools",
-    videoPlaceholder: "https://res.cloudinary.com/dfyuhslyv/video/upload/v1747484482/wxzpv42w5gcclwe4y68p.mp4",
+    videoPlaceholder: "https://res.cloudinary.com/dfyuhslyv/video/upload/v1747576801/xyngwlagmolycr5x3osv.mp4",
     techStack: ["Next.js", "Node.js", "AWS-S3", "WhisperX", "FFMPEG", "Tailwind CSS", "Vercel"],
     repoUrl: "https://github.com/Riddz04/CaptionizeIt",
     liveUrl: "https://captionizeit.vercel.app/"
@@ -16,7 +16,7 @@ const projects = [
     id: 2,
     title: "Career Compass",
     description: "An AI-powered platform built for the Amdocs Gen AI Hackathon 2024-2025, offering personalized, unbiased career guidance by combining advanced AI with emotional intelligence.",
-    videoPlaceholder: "https://res.cloudinary.com/dfyuhslyv/video/upload/v1747559961/mods0fxkihd71jdlo8gs.mp4",
+    videoPlaceholder: "https://res.cloudinary.com/dfyuhslyv/video/upload/v1747576713/mtoefe7k4xiztuske20o.mp4",
     techStack: ["Streamlit", "AWS", "Crew.ai", "Langchain", "Flask", "Grok API"],
     repoUrl: "https://github.com/Riddz04/CAREER-COMPASS-AI",
     liveUrl: "https://www.youtube.com/watch?v=ouY-o1L28Ko"
@@ -25,7 +25,7 @@ const projects = [
     id: 3,
     title: "Pig-Fiesta",
     description: "Pig-Fiesta is a fun and interactive dice game where players race to reach 50 points by rolling and holding their luck. 🐷🎲",
-    videoPlaceholder: "https://res.cloudinary.com/dfyuhslyv/video/upload/v1747555994/rdsstuc3smfdmhmx8rma.mp4",
+    videoPlaceholder: "https://res.cloudinary.com/dfyuhslyv/video/upload/v1747576897/w4cywcinnaogaijkjaog.mp4",
     techStack: ["React-Vite", "Vercel", "Tailwind CSS", "Vanilla.js"],
     repoUrl: "https://github.com/Riddz04/Pig-Fiesta",
     liveUrl: "https://pig-fiesta.vercel.app/"
