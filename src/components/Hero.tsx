@@ -115,7 +115,7 @@ const Hero: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-teal-600 rounded-full animate-spin-slow"></div>
           <div className="absolute inset-2 bg-white dark:bg-gray-900 rounded-full overflow-hidden">
             <img
-              src="photo.png" 
+              src="/photo.png" 
               alt="Riddhi Dhawan"
               className="w-full h-full object-cover"
             />
