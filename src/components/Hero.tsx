@@ -1,70 +1,51 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const Hero: React.FC = () => {
-  const nameRef = useRef<HTMLHeadingElement>(null);
   const roleRef = useRef<HTMLParagraphElement>(null);
   const photoRef = useRef<HTMLDivElement>(null);
   const [currentRole, setCurrentRole] = useState(0);
   const roles = ["Full-Stack Developer 👩🏻‍💻", "Oreo's Mom 🐶", "Cinephile 🎬"];
   const [animationComplete, setAnimationComplete] = useState(false);
+  const [animatedName, setAnimatedName] = useState<string[]>([]);
 
   useEffect(() => {
-    // Animation for the name
-    if (nameRef.current) {
-      const letters = nameRef.current.innerText.split('');
-      nameRef.current.innerHTML = '';
-      
-      letters.forEach((letter, i) => {
-        const span = document.createElement('span');
-        span.textContent = letter;
-        span.style.opacity = '0';
-        span.style.transform = 'translateY(20px)';
-        span.style.display = 'inline-block';
-        span.style.transition = `opacity 0.5s ease, transform 0.5s ease`;
-        span.style.transitionDelay = `${i * 0.05}s`;
-        
-        nameRef.current?.appendChild(span);
-        
-        setTimeout(() => {
-          span.style.opacity = '1';
-          span.style.transform = 'translateY(0)';
-        }, 100);
-      });
-    }
+  // Animate name using state instead of DOM manipulation
+  setAnimatedName("Riddhi Dhawan".split(''));
 
-    // Role text animation
-    let roleInterval: NodeJS.Timeout;
-    if (roleRef.current && !animationComplete) {
-      roleInterval = setInterval(() => {
-        setCurrentRole(prev => {
-          if (prev === roles.length - 1) {
-            clearInterval(roleInterval);
-            setAnimationComplete(true);
-            return 0; // Return to Full-Stack Developer
-          }
-          return prev + 1;
-        });
-      }, 2000);
-    }
-
-    // Photo container animation
-    if (photoRef.current) {
-      photoRef.current.style.opacity = '0';
-      photoRef.current.style.transform = 'scale(0.8)';
-      
-      setTimeout(() => {
-        if (photoRef.current) {
-          photoRef.current.style.transition = 'opacity 1s ease, transform 1s ease';
-          photoRef.current.style.opacity = '1';
-          photoRef.current.style.transform = 'scale(1)';
+  // Role text animation
+  let roleInterval: NodeJS.Timeout;
+  if (roleRef.current && !animationComplete) {
+    roleInterval = setInterval(() => {
+      setCurrentRole(prev => {
+        if (prev === roles.length - 1) {
+          clearInterval(roleInterval);
+          setAnimationComplete(true);
+          return 0;
         }
-      }, 1500);
-    }
+        return prev + 1;
+      });
+    }, 2000);
+  }
 
-    return () => {
-      if (roleInterval) clearInterval(roleInterval);
-    };
-  }, [animationComplete]);
+  // Photo container animation
+  if (photoRef.current) {
+    photoRef.current.style.opacity = '0';
+    photoRef.current.style.transform = 'scale(0.8)';
+
+    setTimeout(() => {
+      if (photoRef.current) {
+        photoRef.current.style.transition = 'opacity 1s ease, transform 1s ease';
+        photoRef.current.style.opacity = '1';
+        photoRef.current.style.transform = 'scale(1)';
+      }
+    }, 1500);
+  }
+
+  return () => {
+    if (roleInterval) clearInterval(roleInterval);
+  };
+}, [animationComplete]);
+
 
   return (
     <section id="hero" className="min-h-screen flex items-center relative overflow-hidden pt-20">
@@ -78,12 +59,25 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-center md:justify-between">
         {/* Text content */}
         <div className="md:w-1/2 text-center md:text-left mb-12 md:mb-0">
-          <h1 
-            ref={nameRef}
-            className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent mb-6"
-          >
-            Riddhi Dhawan
+          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent mb-6">
+            RIDDHI DHAWAN
+            {animatedName.map((char, i) => (
+              <span
+                key={i}
+                style={{
+                  opacity: 0,
+                  transform: 'translateY(20px)',
+                  display: 'inline-block',
+                  animation: `fadeUp 0.5s ease-out forwards`,
+                  animationDelay: `${i * 0.05}s`,
+                }}
+              >
+                {char}
+              </span>
+            ))}
+            
           </h1>
+
           <div className="inline-block mb-8">
             <div className="relative bg-gradient-to-r from-blue-600/10 to-teal-600/10 dark:from-blue-900/30 dark:to-teal-900/30 rounded-lg backdrop-blur-sm px-4 py-2">
               <p 
@@ -116,14 +110,14 @@ const Hero: React.FC = () => {
         {/* Profile photo */}
         <div 
           ref={photoRef}
-          className="w-68 h-68 md:w-80 md:h-80 relative"
+          className="w-64 h-64 md:w-80 md:h-80 relative"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-teal-600 rounded-full animate-spin-slow"></div>
           <div className="absolute inset-2 bg-white dark:bg-gray-900 rounded-full overflow-hidden">
             <img
-            src="photu2.png" // <-- Replace with your actual image path
-            alt="Riddhi"
-            className="w-full h-full object-cover"
+              src="photo.png" 
+              alt="Riddhi Dhawan"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>

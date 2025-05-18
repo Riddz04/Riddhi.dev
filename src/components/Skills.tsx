@@ -4,11 +4,11 @@ import SectionDivider from './SectionDivider';
 const skillsData = [
   {
     category: "Frontend",
-    skills: ["React", "TypeScript", "JavaScript", "HTML5", "CSS3", "Tailwind CSS"]
+    skills: ["React", , "JavaScript", "TypeScript", "HTML5", "CSS3", "Tailwind CSS"]
   },
   {
     category: "Backend",
-    skills: ["Node.js", "Express", "Python", "Django", "REST API", "GraphQL"]
+    skills: ["Node.js", "Next.js", "Express", "Python", "REST API", "GraphQL"]
   },
   {
     category: "Database",

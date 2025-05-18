@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SectionDivider from './SectionDivider';
 import { Send } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -23,37 +24,50 @@ const Contact: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+ 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.message) {
-      setFormStatus({
-        message: 'Please fill out all fields',
-        isError: true,
-      });
+      setFormStatus({ message: 'Please fill out all fields', isError: true });
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      setFormStatus({
-        message: 'Please enter a valid email address',
-        isError: true,
-      });
+      setFormStatus({ message: 'Please enter a valid email address', isError: true });
       return;
     }
 
-    setFormStatus({
-      message: 'Message sent successfully!',
-      isError: false,
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      message: formData.message,
+    };
+
+    emailjs.send(
+    import.meta.env.VITE_EMAILJS_SERVICE_ID!,
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID!,
+    templateParams,
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY!
+  )
+
+    .then((response) => {
+    console.log('EmailJS response:', response); 
+    if (response.status === 200) {
+      setFormStatus({ message: 'Message sent successfully!', isError: false });
+      setFormData({ name: '', email: '', message: '' });
+    } else {
+      setFormStatus({ message: 'Something went wrong. Please try again.', isError: true });
+    }
+    })
+    .catch((error) => {
+      console.error('EmailJS error:', error);
+      setFormStatus({ message: 'Failed to send message. Please try again later.', isError: true });
     });
-    
-    setFormData({
-      name: '',
-      email: '',
-      message: '',
-    });
+
   };
+
 
   useEffect(() => {
     const observer = new IntersectionObserver(

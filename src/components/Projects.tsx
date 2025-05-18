@@ -15,17 +15,17 @@ const projects = [
   {
     id: 2,
     title: "Career Compass",
-    description: "This is an innovative AI-driven platform developed for the Amdocs Gen AI Hackathon 2024-2025. My platform revolutionizes career guidance by combining advanced AI technologies with emotional intelligence to provide personalized, unbiased career advice and professional development planning.",
-    videoPlaceholder: "https://images.pexels.com/photos/7148384/pexels-photo-7148384.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    description: "An AI-powered platform built for the Amdocs Gen AI Hackathon 2024-2025, offering personalized, unbiased career guidance by combining advanced AI with emotional intelligence.",
+    videoPlaceholder: "https://res.cloudinary.com/dfyuhslyv/video/upload/v1747559961/mods0fxkihd71jdlo8gs.mp4",
     techStack: ["Streamlit", "AWS", "Crew.ai", "Langchain", "Flask", "Grok API"],
     repoUrl: "https://github.com/Riddz04/CAREER-COMPASS-AI",
-    liveUrl: "https://example.com"
+    liveUrl: "https://www.youtube.com/watch?v=ouY-o1L28Ko"
   },
   {
     id: 3,
     title: "Pig-Fiesta",
     description: "Pig-Fiesta is a fun and interactive dice game where players race to reach 50 points by rolling and holding their luck. 🐷🎲",
-    videoPlaceholder: "https://images.pexels.com/photos/5926387/pexels-photo-5926387.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    videoPlaceholder: "https://res.cloudinary.com/dfyuhslyv/video/upload/v1747555994/rdsstuc3smfdmhmx8rma.mp4",
     techStack: ["React-Vite", "Vercel", "Tailwind CSS", "Vanilla.js"],
     repoUrl: "https://github.com/Riddz04/Pig-Fiesta",
     liveUrl: "https://pig-fiesta.vercel.app/"

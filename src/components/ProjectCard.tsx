@@ -20,7 +20,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     <div className="project-card bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden opacity-0 transform translate-y-8 transition-all duration-700 hover:shadow-xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Video/Image container */}
-        <div className="relative overflow-hidden h-64 md:h-full group">
+        <div className="relative overflow-hidden group">
           {project.videoPlaceholder.endsWith(".mp4") ? (
             <video
               src={project.videoPlaceholder}
@@ -28,15 +28,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               loop
               muted
               playsInline
-              className="w-full h-auto rounded-lg shadow-md"
+              className="w-full max-h-[500px] object-contain rounded-lg shadow-md"
             />
           ) : (
             <img
               src={project.videoPlaceholder}
               alt={project.title}
-              className="w-full h-auto rounded-lg shadow-md"
+              className="w-full max-h-[500px] object-contain rounded-lg shadow-md"
             />
           )}
+
 
           {/* Play overlay */}
           <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
