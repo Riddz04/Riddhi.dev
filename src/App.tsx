@@ -7,14 +7,12 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import FloatingLogo from './components/FloatingLogo';
 
 function App() {
   return (
     <ThemeProvider>
       <div className="font-sans text-gray-900 dark:text-white bg-white dark:bg-black min-h-screen">
         <Header />
-        <FloatingLogo />
         <main>
           <Hero />
           <About />
