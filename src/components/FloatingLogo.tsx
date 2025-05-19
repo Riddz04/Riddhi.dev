@@ -92,6 +92,16 @@ const FloatingLogo: React.FC = () => {
     };
   }, [isDragging]);
 
+  // Start animation on mount
+  useEffect(() => {
+    animate();
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div
       ref={logoRef}
