@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const FloatingLogo: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const [position, setPosition] = useState({ x: 20, y: 20 });
   const [velocity, setVelocity] = useState({ x: 2, y: 2 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [hasBeenMoved, setHasBeenMoved] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const animationFrameRef = useRef<number>();
   const logoRef = useRef<HTMLDivElement>(null);
 
+  // Show only after scroll
   useEffect(() => {
     const handleScroll = () => {
       setIsVisible(window.scrollY > 100);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -23,30 +22,23 @@ const FloatingLogo: React.FC = () => {
     setIsDragging(true);
     setDragStart({
       x: e.clientX - position.x,
-      y: e.clientY - position.y
+      y: e.clientY - position.y,
     });
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
+    cancelAnimationFrame(animationFrameRef.current!);
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: MouseEvent) => {
     if (isDragging) {
-      const newPosition = {
+      setPosition({
         x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y
-      };
-      setPosition(newPosition);
-      setHasBeenMoved(true);
+        y: e.clientY - dragStart.y,
+      });
     }
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
-    if (!hasBeenMoved) {
-      setHasBeenMoved(true);
-      animate();
-    }
+    animate(); // Resume bouncing
   };
 
   const animate = () => {
@@ -59,19 +51,17 @@ const FloatingLogo: React.FC = () => {
     let newPosition = { ...position };
     let newVelocity = { ...velocity };
 
-    // Update position
     newPosition.x += newVelocity.x;
     newPosition.y += newVelocity.y;
 
-    // Check for collisions with window boundaries
+    // Bounce off walls
     if (newPosition.x <= 0 || newPosition.x + logoRect.width >= windowWidth) {
-      newVelocity.x = -newVelocity.x;
+      newVelocity.x *= -1;
     }
     if (newPosition.y <= 0 || newPosition.y + logoRect.height >= windowHeight) {
-      newVelocity.y = -newVelocity.y;
+      newVelocity.y *= -1;
     }
 
-    // Keep logo within bounds
     newPosition.x = Math.max(0, Math.min(windowWidth - logoRect.width, newPosition.x));
     newPosition.y = Math.max(0, Math.min(windowHeight - logoRect.height, newPosition.y));
 
@@ -82,25 +72,24 @@ const FloatingLogo: React.FC = () => {
   };
 
   useEffect(() => {
-    if (hasBeenMoved && !isDragging) {
+    if (!isDragging) {
       animate();
     }
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, [hasBeenMoved, isDragging]);
+    return () => cancelAnimationFrame(animationFrameRef.current!);
+  }, [isDragging]);
 
   useEffect(() => {
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove as any);
+      document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
-      return () => {
-        document.removeEventListener('mousemove', handleMouseMove as any);
-        document.removeEventListener('mouseup', handleMouseUp);
-      };
+    } else {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
     }
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
   }, [isDragging]);
 
   return (
@@ -113,20 +102,13 @@ const FloatingLogo: React.FC = () => {
         left: `${position.x}px`,
         top: `${position.y}px`,
         transform: 'translate(0, 0)',
-        transition: isDragging ? 'none' : 'transform 0.1s linear'
+        transition: isDragging ? 'none' : 'transform 0.1s linear',
       }}
       onMouseDown={handleMouseDown}
     >
       <div className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-600 to-teal-600 flex items-center justify-center text-white font-bold shadow-lg">
         RD
       </div>
-      {isVisible && !hasBeenMoved && (
-        <div className="absolute left-full ml-4 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-lg whitespace-nowrap">
-          <p className="text-sm text-gray-600 dark:text-gray-300">
-            ✨ Play with me! Drag and drop anywhere
-          </p>
-        </div>
-      )}
     </div>
   );
 };
